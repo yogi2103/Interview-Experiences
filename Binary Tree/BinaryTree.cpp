@@ -1,11 +1,60 @@
+#include<bits/stdc++.h>
 #include"BinaryTree.h"
 #include<iostream>
+#include<unordered_map>
 #include<queue>
+#include<vector>
 using namespace std;
+
+//printing the tree in vertical order
+
+void printVertical(BinaryTreeNode<int>* root){
+	if(root==NULL){
+		return;
+	}
+	
+	queue<pair<BinaryTreeNode<int>*,int>>q;
+	unordered_map<int,vector<int>>m;
+	int hd=0;
+	q.push(make_pair(root,hd));
+	int mini=INT_MAX;
+	int maxi=INT_MIN;
+	while(!q.empty()){
+			pair<BinaryTreeNode<int>*,int> p=q.front();
+			hd=p.second;
+			mini=min(hd,mini);
+			maxi=max(hd,maxi);
+			m[p.second].push_back(p.first->data);
+			q.pop();
+			if(p.first->left){
+				q.push(make_pair(p.first->left,hd-1));
+			}
+			if(p.first->right){
+				q.push(make_pair(p.first->right,hd+1));
+			}
+		}
+	
+	for(int k=mini;k<=maxi;k++){
+		vector<int> temp=m[k];
+		for(int i=0;i<temp.size();i++){
+			cout<<temp[i]<<" ";
+		}
+	}
+	
+	//iterating through map of vector
+		
+//	for(auto& it:m){
+//		cout<<it.first<<":";
+//		for(auto& z: it.second){
+//			cout<<z<<",";
+//		}
+//		cout<<endl;
+//	}
+}
 
 //for printing the right view of tree
 
-void printLeft(BinaryTreeNode<int>* root){
+void printRIght(BinaryTreeNode<int>* root){
 	if(root==NULL){
 		return;
 	}
@@ -159,5 +208,5 @@ int main(){
 	//root->left=root1;
 	//root->right=root2;
 	root=takeInputLevelwise();
-	printLeft(root);
+	printVertical(root);
 }
