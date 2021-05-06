@@ -6,9 +6,64 @@
 #include<vector>
 using namespace std;
 
+
+void LeftBoundary(BinaryTreeNode<int>* root){
+	if(root==NULL){
+		return;
+	}
+	if(root->left){
+		cout<<root->data<<" ";
+		LeftBoundary(root->left);
+	}
+	else if(root->right){
+		cout<<root->data<<" ";
+		LeftBoundary(root->right);
+	}
+}
+
+
+void RightBoundary(BinaryTreeNode<int>* root){
+	if(root==NULL){
+		return;
+	}
+	if(root->left){
+		cout<<root->data<<" ";
+		RightBoundary(root->left);
+	}
+	else if(root->right){
+		cout<<root->data<<" ";
+		RightBoundary(root->right);
+	}
+}
+
+void printLeaf(BinaryTreeNode<int>* root){
+	if(root==NULL){
+		return;
+	}
+	
+	if(root->left==NULL && root->right==NULL){
+		cout<<root->data;
+	}
+	
+	printLeaf(root->left);
+	printLeaf(root->right);
+}
+
+//boundary traversal of tree
+void printBoundary(BinaryTreeNode<int>* root){
+	if(root==NULL){
+		return;
+	}
+	cout<<root->data<<";";
+	LeftBoundary(root->left);
+	RightBoundary(root->right);
+	printLeaf(root);
+}
+
+
 //top view of binary tree (Idea is to print first element from the vertical traversal map of vector)
 
-vector<int> topView(BinaryTreeNode *root)
+vector<int> topView(BinaryTreeNode<int>*root)
     {
         //Your code here
           vector<int>v;
@@ -16,14 +71,14 @@ vector<int> topView(BinaryTreeNode *root)
 		return v;
 	}
 	
-	queue<pair<BinaryTreeNode*,int>>q;
+	queue<pair<BinaryTreeNode<int>*,int>>q;
 	unordered_map<int,vector<int>>m;
 	int hd=0;
 	q.push(make_pair(root,hd));
 	int mini=INT_MAX;
 	int maxi=INT_MIN;
 	while(!q.empty()){
-			pair<Node*,int> p=q.front();
+			pair<BinaryTreeNode<int>*,int> p=q.front();
 			hd=p.second;
 			mini=min(hd,mini);
 			maxi=max(hd,maxi);
@@ -245,5 +300,5 @@ int main(){
 	//root->left=root1;
 	//root->right=root2;
 	root=takeInputLevelwise();
-	printVertical(root);
+	printBoundary(root);
 }
