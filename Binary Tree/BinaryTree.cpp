@@ -4,7 +4,34 @@
 using namespace std;
 
 
+//for printing the left view of tree
 
+void printLeft(BinaryTreeNode<int>* root){
+	if(root==NULL){
+		return;
+	}
+	queue<BinaryTreeNode<int>* > q;
+	q.push(root);
+	while(!q.empty()){
+		int size=q.size();
+		int k=0;
+		while(size>0){
+			BinaryTreeNode<int>* front=q.front();
+			q.pop();
+			if(k==0){
+				cout<<front->data;
+				k++;
+			}
+			if(front->left){
+				q.push(front->left);
+			}
+			if(front->right){
+				q.push(front->right);
+			}
+			size--;
+		}
+	}
+}
 
 
 
@@ -103,5 +130,5 @@ int main(){
 	//root->left=root1;
 	//root->right=root2;
 	root=takeInputLevelwise();
-	printTreeLevelwise(root);
+	printLeft(root);
 }
