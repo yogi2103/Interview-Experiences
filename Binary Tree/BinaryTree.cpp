@@ -6,6 +6,42 @@
 #include<vector>
 using namespace std;
 
+//bottom view of binary tree (Key is to print the last element in the vertical traversal of map of vector )
+
+vector <int> bottomView(Node *root)
+{
+   // Your Code Her
+        //Your code here
+        vector<int>v;
+        if(root==NULL){
+		    return v;
+        }
+	queue<pair<Node*,int>>q;
+	unordered_map<int,vector<int>>m;
+	int hd=0;
+	q.push(make_pair(root,hd));
+	int mini=INT_MAX;
+	int maxi=INT_MIN;
+	while(!q.empty()){
+			pair<Node*,int> p=q.front();
+			hd=p.second;
+			mini=min(hd,mini);
+			maxi=max(hd,maxi);
+			m[p.second].push_back(p.first->data);
+			q.pop();
+			if(p.first->left){
+				q.push(make_pair(p.first->left,hd-1));
+			}
+			if(p.first->right){
+				q.push(make_pair(p.first->right,hd+1));
+			}
+		}
+	for(int k=mini;k<=maxi;k++){
+		vector<int> temp=m[k];
+		v.push_back(temp[temp.size()-1]);
+	}
+	return v;
+}
 
 void LeftBoundary(BinaryTreeNode<int>* root){
 	if(root==NULL){
