@@ -3,6 +3,35 @@
 #include<queue>
 using namespace std;
 
+//for printing the right view of tree
+
+void printLeft(BinaryTreeNode<int>* root){
+	if(root==NULL){
+		return;
+	}
+	queue<BinaryTreeNode<int>* > q;
+	q.push(root);
+	while(!q.empty()){
+		int size=q.size();
+		int k=0;
+		while(size>0){
+			BinaryTreeNode<int>* front=q.front();
+			q.pop();
+			if(k==0){
+				cout<<front->data;
+				k++;
+			}
+			if(front->right){
+				q.push(front->right);
+			}
+			if(front->left){
+				q.push(front->left);
+			}
+			size--;
+		}
+	}
+}
+
 
 //for printing the left view of tree
 
