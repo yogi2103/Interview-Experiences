@@ -1,10 +1,47 @@
 #include<bits/stdc++.h>
 #include"BinaryTree.h"
 #include<iostream>
-#include<unordered_map>
+#include<map>
 #include<queue>
 #include<vector>
 using namespace std;
+
+//top view of binary tree (Idea is to print first element from the vertical traversal map of vector)
+
+vector<int> topView(BinaryTreeNode *root)
+    {
+        //Your code here
+          vector<int>v;
+        if(root==NULL){
+		return v;
+	}
+	
+	queue<pair<BinaryTreeNode*,int>>q;
+	unordered_map<int,vector<int>>m;
+	int hd=0;
+	q.push(make_pair(root,hd));
+	int mini=INT_MAX;
+	int maxi=INT_MIN;
+	while(!q.empty()){
+			pair<Node*,int> p=q.front();
+			hd=p.second;
+			mini=min(hd,mini);
+			maxi=max(hd,maxi);
+			m[p.second].push_back(p.first->data);
+			q.pop();
+			if(p.first->left){
+				q.push(make_pair(p.first->left,hd-1));
+			}
+			if(p.first->right){
+				q.push(make_pair(p.first->right,hd+1));
+			}
+		}
+	for(int k=mini;k<=maxi;k++){
+		vector<int> temp=m[k];
+		v.push_back(temp[0]);
+	}
+	return v;
+    }
 
 //printing the tree in vertical order
 
@@ -14,7 +51,7 @@ void printVertical(BinaryTreeNode<int>* root){
 	}
 	
 	queue<pair<BinaryTreeNode<int>*,int>>q;
-	unordered_map<int,vector<int>>m;
+	map<int,vector<int>>m;
 	int hd=0;
 	q.push(make_pair(root,hd));
 	int mini=INT_MAX;
@@ -34,22 +71,22 @@ void printVertical(BinaryTreeNode<int>* root){
 			}
 		}
 	
-	for(int k=mini;k<=maxi;k++){
-		vector<int> temp=m[k];
-		for(int i=0;i<temp.size();i++){
-			cout<<temp[i]<<" ";
-		}
-	}
+//	for(int k=mini;k<=maxi;k++){
+//		vector<int> temp=m[k];
+//		for(int i=0;i<temp.size();i++){
+//			cout<<temp[i]<<" ";
+//		}
+//	}
 	
 	//iterating through map of vector
 		
-//	for(auto& it:m){
-//		cout<<it.first<<":";
-//		for(auto& z: it.second){
-//			cout<<z<<",";
-//		}
-//		cout<<endl;
-//	}
+	for(auto& it:m){
+		cout<<it.first<<":";
+		for(auto& z: it.second){
+			cout<<z<<",";
+		}
+		cout<<endl;
+	}
 }
 
 //for printing the right view of tree
