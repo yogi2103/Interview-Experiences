@@ -6,6 +6,52 @@
 #include<vector>
 using namespace std;
 
+//cousins of binary tree
+bool isCousins(Node *root, int a, int b)
+{
+   //add code here.
+   
+   if(root==NULL){
+       return false;
+   }
+   queue<Node*>q;
+   q.push(root);
+   int l1=0;
+   int l2=0;
+   int k=0;
+   while(!q.empty()){
+       int size=q.size();
+       while(size>0){
+       Node* top=q.front();
+       if(top->data==a){
+           l1=k;
+       }
+       if(top->data==b){
+           l2=k;
+       }
+       q.pop();
+       if(top->left){
+           q.push(top->left);
+       }
+       if(top->right){
+           q.push(top->right);
+       }
+       if(top->left && top->right){
+           if((top->left->data==a && top->right->data==b) || (top->left->data==b && top->right->data==a)){
+               return false;
+           }
+       }
+       size--;
+       }
+       k++;
+   }
+   if(l1!=l2){
+       return false;
+   }
+    return true;
+   
+}
+
 //bottom view of binary tree (Key is to print the last element in the vertical traversal of map of vector )
 
 vector <int> bottomView(Node *root)
