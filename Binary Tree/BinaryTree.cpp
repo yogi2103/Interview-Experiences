@@ -6,6 +6,43 @@
 #include<vector>
 using namespace std;
 
+//Function to connect nodes at same level.
+    void connect(Node *root)
+    {
+       // Your Code Here
+       if(root==NULL){
+           return;
+       }
+       
+       queue<Node*>q;
+       q.push(root);
+       while(!q.empty()){
+           int size=q.size();
+           Node* top=NULL;
+           Node* back=q.front();
+           int k=0;
+           while(size>0){
+               top=q.front();
+               q.pop();
+               //only wants to assign next if on each level we reach to second node
+               if(k>0){
+                   back->nextRight=top;
+                   back=top;
+               }
+               if(top->left){
+                   q.push(top->left);
+               }
+               if(top->right){
+                   q.push(top->right);
+               }
+               size--;
+               k++;
+           }
+            top->nextRight=NULL;
+       }
+    }    
+
+
 //zig zag traversal of tree
 vector <int> zigZagTraversal(Node* root)
 {
