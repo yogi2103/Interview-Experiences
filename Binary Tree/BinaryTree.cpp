@@ -6,6 +6,31 @@
 #include<vector>
 using namespace std;
 
+//Diameter of binary tree
+ pair<int,int> Heightdiameter(Node* root){
+        if(root==NULL){
+            pair<int,int>p;
+            p.first=0;
+            p.second=0;
+            return p;
+        }
+        
+        pair<int,int>LeftHeightdiameter=Heightdiameter(root->left);
+        pair<int,int>RightHeightdiameter=Heightdiameter(root->right);
+        int height=1+max(LeftHeightdiameter.first,RightHeightdiameter.first);
+        int diameter=max(LeftHeightdiameter.first+RightHeightdiameter.first,max(LeftHeightdiameter.second,RightHeightdiameter.second));
+        pair<int,int>p;
+        p.first=height;
+        p.second=diameter;
+        return p;
+    }
+    int diameter(Node* root)
+    {
+    // Your code here
+    pair<int,int>p=Heightdiameter(root);
+    return p.second+1;
+    }
+
 //cousins of binary tree
 bool isCousins(Node *root, int a, int b)
 {
