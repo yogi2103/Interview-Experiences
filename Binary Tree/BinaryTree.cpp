@@ -6,6 +6,49 @@
 #include<vector>
 using namespace std;
 
+//zig zag traversal of tree
+vector <int> zigZagTraversal(Node* root)
+{
+	// Code here
+	vector<int> v;
+	if(root==NULL){
+	    return v;
+	}
+	stack<Node*> ms;
+	ms.push(root);
+	stack<Node*>cs;
+	int k=0;
+	while(!ms.empty()){
+	    int size=ms.size();
+	    while(size>0){
+	        Node* top=ms.top();
+	        v.push_back(top->data);
+    	    ms.pop();
+    	    if(k%2==0){
+        	    if(top->left){
+        	       cs.push(top->left);
+        	    }
+        	    if(top->right){
+        	        cs.push(top->right);
+        	    }      
+    	    }
+    	    else{
+    	        if(top->right){
+        	        cs.push(top->right);
+        	    }      
+    	        if(top->left){
+        	       cs.push(top->left);
+        	    }
+    	    }
+    	    size--;
+	    }
+	    if(ms.empty()){
+	        swap(ms,cs);
+	        k++;
+	    }
+	}	
+}
+
 //Diameter of binary tree
  pair<int,int> Heightdiameter(Node* root){
         if(root==NULL){
